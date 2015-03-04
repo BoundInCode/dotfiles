@@ -54,6 +54,8 @@ set wildignore+=$HOME./Library/*
 " Extras {{{ "
 " Resize splits when the window is resized
 au VimResized * :wincmd =
+set spelllang=en_us
+set spellfile=$HOME/.vim/spell/en.utf-8.add
 autocmd BufRead,BufNewFile *.md setlocal spell
 au BufRead,BufNewFile *.md set filetype=markdown
 " }}} Extras "
@@ -82,7 +84,7 @@ if !isdirectory(expand(&directory))
     call mkdir(expand(&directory), "p")
 endif
 " 1}}} "
-" Plugins {{{2 "
+" Plugins {{{1 "
 call plug#begin()
 Plug 'tpope/vim-fugitive'           " for git in status bar
 Plug 'tpope/vim-surround'
@@ -108,6 +110,7 @@ Plug 'sjl/gundo.vim'
 Plug 'sjl/vitality.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'cocopon/iceberg.vim'
+Plug 'suan/vim-instant-markdown'
 call plug#end()
 " 2}}} "
 " Mappings {{{ "
@@ -123,6 +126,7 @@ nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
 inoremap jj <ESC>
+nnoremap Q @q
 
 " Uses 'very magic' regex search
 nnoremap / /\v

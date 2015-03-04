@@ -1,9 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/Users/liam/Documents/Shared'
-let g:netrw_dirhist_2='/Users/liam'
-let g:netrw_dirhist_3='/Users/liam/Documents'
-let g:netrw_dirhist_4='/Users/liam/Documents/Algorithms'
-let g:netrw_dirhist_5='/Users/liam/Documents'
-let g:netrw_dirhist_6='/Users/liam/Documents/Shared'
-let g:netrw_dirhist_7='/Users/liam/Documents/Shared/Algorithms'
