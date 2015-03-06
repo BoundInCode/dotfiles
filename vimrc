@@ -64,6 +64,7 @@ set guioptions-=r
 set guifont=Fira\ Mono:h14
 set linespace=2
 colorscheme iceberg
+" colorscheme gotham
 " }}} Appearance "
 " Backups {{{1 "
 set backup                        " enable backups
