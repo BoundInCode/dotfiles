@@ -50,10 +50,13 @@ set gdefault
 set foldmethod=marker
 set wildignore+=*/tmp/*,*.so,*.pyc,*pdf,*docx,*.swp,*.zip,*.indd,*.psd,*mp3,*.png,*jpg
 set wildignore+=$HOME./Library/*
+let g:netrw_list_hide =  '\.png$,\.jpg$,\.png$'
 " }}} Basics "
 " Extras {{{ "
 " Resize splits when the window is resized
 au VimResized * :wincmd =
+set splitbelow
+set splitright
 set spelllang=en_us
 set spellfile=$HOME/.vim/spell/en.utf-8.add
 autocmd BufRead,BufNewFile *.md setlocal spell
@@ -87,36 +90,36 @@ endif
 " 1}}} "
 " Plugins {{{1 "
 call plug#begin()
-Plug 'tpope/vim-fugitive'           " for git in status bar
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'         " gcc
-Plug 'tpope/vim-unimpaired'         " add [ movements
+Plug 'tpope/vim-fugitive'        " for git in status bar
+Plug 'tpope/vim-surround'        " add motions to add/change/remove quotes and braces
+Plug 'tpope/vim-commentary'      " gcc
+Plug 'tpope/vim-unimpaired'      " add [ movements
 Plug 'tpope/vim-repeat'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'tpope/vim-vinegar'         " makes netrw a lot better
+Plug 'SirVer/ultisnips'          " SNIPPETS
+Plug 'honza/vim-snippets'        " the snippets themselves
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'sgur/ctrlp-extensions.vim'
-Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'sgur/ctrlp-extensions.vim' " Adds ctrlp yank history and MRU
+Plug 'FelikZ/ctrlp-py-matcher'   " ctrlp.speed++
+" Plug 'rking/ag.vim'
 Plug 'scrooloose/syntastic'         " error highlighting
-Plug 'mattn/emmet-vim'              " for html/css
+" Plug 'mattn/emmet-vim'              " for html/css
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
-Plug 'bling/vim-airline'            " those pretty bars at top and bottom
-Plug 'terryma/vim-multiple-cursors' " ctrl-n for Sublime Text Awesome
-Plug 'junegunn/goyo.vim'            " For distraction-free writing
+Plug 'bling/vim-airline'         " those pretty bars at top and bottom
+Plug 'junegunn/goyo.vim'         " For distraction-free writing
 Plug 'junegunn/limelight.vim'
-Plug 'junegunn/vim-easy-align'
-Plug 'sheerun/vim-polyglot'         " language pack
-Plug 'tpope/vim-vinegar'
-Plug 'sjl/gundo.vim'
-Plug 'sjl/vitality.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'cocopon/iceberg.vim'
-Plug 'suan/vim-instant-markdown'
+Plug 'junegunn/vim-easy-align'   " Press enter in visual mode...Magic
+Plug 'sheerun/vim-polyglot'      " language pack
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'sjl/gundo.vim'             " Visual vim undo tree
+Plug 'sjl/vitality.vim'          " Change vim cursor in insert mode
+Plug 'airblade/vim-gitgutter'    " Adds the symbols to the sidebar for git stuff
+Plug 'suan/vim-instant-markdown' " Preview .md in browser
+Plug 'troydm/zoomwintab.vim'     " Press ` to toggle zoom
 call plug#end()
 " 2}}} "
 " Mappings {{{ "
-nnoremap <leader>k :bn<CR>
-nnoremap <leader>j :bp<CR>
 nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'
 
@@ -169,7 +172,8 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_clear_cache_on_exit = 0
 nnoremap <leader>r :CtrlPMRU<CR>
-nnoremap <leader>h :CtrlPYankring<CR>
+nnoremap <leader>y :CtrlPYankring<CR>
+inoremap <C-y> <ESC>:CtrlPYankring<CR>
 nnoremap <leader>f :CtrlPBuffer<CR>
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .git
@@ -178,6 +182,7 @@ let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
       \ --ignore .DS_Store
       \ --ignore "**/*.pyc"
       \ -g ""'
+let g:ctrlp_yankring_limit = 20
 " }}} CTRL-P "
 " Easy-Align {{{ "
 vmap <Enter> <Plug>(EasyAlign)
@@ -210,6 +215,7 @@ let g:syntastic_enable_signs=1
 " Misc Plugins {{{ "
 nnoremap <localleader>e :UltiSnipsEdit<CR>
 nnoremap <Leader>u :GundoToggle<CR>
+nnoremap ` :ZoomWinTabToggle<CR>
 let g:tex_flavor='latex'
 " }}} Misc Plugins "
 " }}} Plugins Settings/Mappings "
