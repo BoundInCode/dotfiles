@@ -113,7 +113,6 @@ Plug 'sheerun/vim-polyglot'      " language pack
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'sjl/gundo.vim'             " Visual vim undo tree
-Plug 'sjl/vitality.vim'          " Change vim cursor in insert mode
 Plug 'airblade/vim-gitgutter'    " Adds the symbols to the sidebar for git stuff
 Plug 'suan/vim-instant-markdown' " Preview .md in browser
 Plug 'troydm/zoomwintab.vim'     " Press ` to toggle zoom
@@ -193,13 +192,16 @@ let g:easy_align_ignore_groups = []
 function! s:goyo_enter()
   Limelight
   set linespace=5
+  setlocal nocursorline
 endfunction
 function! s:goyo_leave()
   Limelight!
   set linespace=2
+  setlocal cursorline
 endfunction
 autocmd User GoyoEnter Limelight
 autocmd User GoyoLeave Limelight!
+nnoremap <leader>g :Goyo<CR>
 " }}} Goyo "
 " UltiSnips {{{ "
 let g:UltiSnipsExpandTrigger="<tab>"
@@ -215,7 +217,7 @@ let g:syntastic_enable_signs=1
 " Misc Plugins {{{ "
 nnoremap <localleader>e :UltiSnipsEdit<CR>
 nnoremap <Leader>u :GundoToggle<CR>
-nnoremap ` :ZoomWinTabToggle<CR>
+nnoremap <leader>e :ZoomWinTabToggle<CR>
 let g:tex_flavor='latex'
 " }}} Misc Plugins "
 " }}} Plugins Settings/Mappings "
