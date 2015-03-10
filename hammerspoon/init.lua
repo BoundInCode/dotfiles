@@ -31,11 +31,19 @@ hs.hotkey.bind(hyper, "Up", function()
   local f = win:frame()
   local screen = win:screen()
   local max = screen:frame()
+  
+  if f.x == max.x or f.x == max.x + max.w / 2 then
+	  f.x = f.x
+	  f.y = max.y
+	  f.w = f.w
+	  f.h = max.h / 2
+  else
+	  f.x = max.x
+	  f.y = max.y
+	  f.w = max.w
+	  f.h = max.h
+  end
 
-  f.x = max.x
-  f.y = max.y
-  f.w = max.w
-  f.h = max.h
   win:setFrame(f)
 end)
 
@@ -45,11 +53,19 @@ hs.hotkey.bind(hyper, "Down", function()
   local f = win:frame()
   local screen = win:screen()
   local max = screen:frame()
-
-  f.x = max.x * 0.2
-  f.y = max.y * 0.2
-  f.w = max.w * 0.4
-  f.h = max.h * 0.6
+  
+  
+  if f.x == max.x or f.x == max.x + max.w / 2 then
+	  f.x = f.x
+	  f.y = f.y + max.h / 2
+	  f.w = f.w
+	  f.h = max.h / 2
+  else
+	  f.x = max.x
+	  f.y = max.y
+	  f.w = max.w
+	  f.h = max.h
+  end
   win:setFrame(f)
 end)
 
