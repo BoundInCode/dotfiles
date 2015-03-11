@@ -18,16 +18,13 @@ set incsearch
 set modelines=0
 set tabstop=4
 set history=1000
-set undofile
 set wrap
 set linebreak
 set shiftwidth=4
 set encoding=utf-8
 set scrolloff=3
 set cpoptions+=cpo-$
-set noautoindent
-set nocindent
-set nosmartindent
+set autoindent
 set noshowmode
 set showcmd
 set hidden
@@ -40,13 +37,14 @@ set ruler
 set backspace=indent,eol,start
 set laststatus=2
 set ttimeout
-set ttimeoutlen=50
+set ttimeoutlen=100
 set number
 let mapleader = " "
 let localleader="\\"
 set ignorecase
 set smartcase
-set gdefault
+set smarttab
+set formatoptions+=j
 set foldmethod=marker
 set wildignore+=*/tmp/*,*.so,*.pyc,*pdf,*docx,*.swp,*.zip,*.indd,*.psd,*mp3,*.png,*jpg
 set wildignore+=$HOME./Library/*
@@ -68,14 +66,15 @@ set guifont=Fira\ Mono:h14
 set linespace=2
 colorscheme iceberg
 " colorscheme gotham
+
 " }}} Appearance "
 " Backups {{{1 "
+set undofile
 set backup                        " enable backups
 set noswapfile                    " it's 2013, Vim.
 
 set undodir=~/.vim/tmp/undo//     " undo files
 set backupdir=~/.vim/tmp/backup// " backups
-set directory=~/.vim/tmp/swap//   " swap files
 
 " Make those folders automatically if they don't already exist.
 if !isdirectory(expand(&undodir))
@@ -84,18 +83,17 @@ endif
 if !isdirectory(expand(&backupdir))
     call mkdir(expand(&backupdir), "p")
 endif
-if !isdirectory(expand(&directory))
-    call mkdir(expand(&directory), "p")
-endif
 " 1}}} "
 " Plugins {{{1 "
 call plug#begin()
+" TPope {{{1 "
 Plug 'tpope/vim-fugitive'        " for git in status bar
 Plug 'tpope/vim-surround'        " add motions to add/change/remove quotes and braces
 Plug 'tpope/vim-commentary'      " gcc
 Plug 'tpope/vim-unimpaired'      " add [ movements
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-vinegar'         " makes netrw a lot better
+" 1}}} "
 Plug 'SirVer/ultisnips'          " SNIPPETS
 Plug 'honza/vim-snippets'        " the snippets themselves
 Plug 'ctrlpvim/ctrlp.vim'
@@ -116,19 +114,25 @@ Plug 'sjl/gundo.vim'             " Visual vim undo tree
 Plug 'airblade/vim-gitgutter'    " Adds the symbols to the sidebar for git stuff
 Plug 'suan/vim-instant-markdown' " Preview .md in browser
 Plug 'troydm/zoomwintab.vim'     " Press ` to toggle zoom
+Plug 'xolox/vim-session'
+Plug 'xolox/vim-misc'
 call plug#end()
 " 2}}} "
 " Mappings {{{ "
 nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'
+inoremap <Down> <C-o>gj
+inoremap <Up>   <C-o>gk
 
 " Better home/end keys - synonymous to normal movement
 nnoremap H ^
-vnoremap L $
+nnoremap L $
 nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
-inoremap jj <ESC>
+" inoremap jj <ESC>
+inoremap jk <ESC>
+inoremap kj <ESC>
 nnoremap Q @q
 
 " Uses 'very magic' regex search
@@ -161,7 +165,7 @@ let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
-let g:airline_detect_whitespace=0
+let g:airline#extensions#whitespace#enabled=0
 " let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
@@ -209,13 +213,15 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsEditSplit="context"
 let g:UltiSnipsEnableSnipMate=0
+nnoremap <localleader>e :UltiSnipsEdit<CR>
 " }}} UltiSnips "
 " Syntastic {{{ "
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
 " }}} Syntastic "
-" Misc Plugins {{{ "
-nnoremap <localleader>e :UltiSnipsEdit<CR>
+" Vim-Session {{{1 "
+let g:session_autosave='yes'
+" Misc Plugins {{{1 "
 nnoremap <Leader>u :GundoToggle<CR>
 nnoremap <leader>e :ZoomWinTabToggle<CR>
 let g:tex_flavor='latex'
