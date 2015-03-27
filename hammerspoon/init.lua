@@ -18,9 +18,9 @@ hs.hotkey.bind(hyper, "Left", function()--{{{
 		local newMax = newScreen:frame()
 		newFrame.x = newMax.x + newMax.x / 2
 		newFrame.y = newMax.y
-		win:setFrame(newFrame)
+		win:setFrame(newFrame, 0)
 	else
-		win:setFrame(newFrame)
+		win:setFrame(newFrame, 0)
 	end
 end)--}}}
 hs.hotkey.bind(hyper, "Right", function()--{{{
@@ -41,9 +41,9 @@ hs.hotkey.bind(hyper, "Right", function()--{{{
 		local newMax = newScreen:frame()
 		newFrame.x = newMax.x
 		newFrame.y = newMax.y
-		win:setFrame(newFrame)
+		win:setFrame(newFrame, 0)
 	else
-		win:setFrame(newFrame)
+		win:setFrame(newFrame, 0)
 	end
 end)--}}}
 hs.hotkey.bind(hyper, "Up", function()--{{{
@@ -64,7 +64,7 @@ hs.hotkey.bind(hyper, "Up", function()--{{{
 	  f.h = max.h
   end
 
-  win:setFrame(f)
+  win:setFrame(f, 0)
 end)--}}}
 hs.hotkey.bind(hyper, "Down", function()--{{{
   local win = hs.window.focusedWindow()
@@ -84,7 +84,7 @@ hs.hotkey.bind(hyper, "Down", function()--{{{
 	  f.w = max.w * 0.6
 	  f.h = max.h * 0.8
   end
-  win:setFrame(f)
+  win:setFrame(f, 0)
 end)--}}}
 function reload_config(files)--{{{
 	    hs.reload()

@@ -45,10 +45,12 @@ set ignorecase
 set smartcase
 set smarttab
 set formatoptions+=j
+set formatoptions-=cro
 set foldmethod=marker
 set wildignore+=*/tmp/*,*.so,*.pyc,*pdf,*docx,*.swp,*.zip,*.indd,*.psd,*mp3,*.png,*jpg
 set wildignore+=$HOME./Library/*
 let g:netrw_list_hide =  '\.png$,\.jpg$,\.png$'
+set virtualedit=block
 " }}} Basics "
 " Extras {{{ "
 " Resize splits when the window is resized
@@ -59,6 +61,7 @@ set spelllang=en_us
 set spellfile=$HOME/.vim/spell/en.utf-8.add
 autocmd BufRead,BufNewFile *.md setlocal spell
 au BufRead,BufNewFile *.md set filetype=markdown
+au BufEnter * silent! lcd %:p:h
 " }}} Extras "
 " Appearance {{{ "
 set guioptions-=r
@@ -86,7 +89,7 @@ endif
 " 1}}} "
 " Plugins {{{1 "
 call plug#begin()
-" TPope {{{1 "
+" TPope {{{2 "
 Plug 'tpope/vim-fugitive'        " for git in status bar
 Plug 'tpope/vim-surround'        " add motions to add/change/remove quotes and braces
 Plug 'tpope/vim-commentary'      " gcc
@@ -99,7 +102,7 @@ Plug 'honza/vim-snippets'        " the snippets themselves
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'sgur/ctrlp-extensions.vim' " Adds ctrlp yank history and MRU
 Plug 'FelikZ/ctrlp-py-matcher'   " ctrlp.speed++
-" Plug 'rking/ag.vim'
+Plug 'rking/ag.vim'
 Plug 'scrooloose/syntastic'         " error highlighting
 " Plug 'mattn/emmet-vim'              " for html/css
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
@@ -110,12 +113,14 @@ Plug 'junegunn/vim-easy-align'   " Press enter in visual mode...Magic
 Plug 'sheerun/vim-polyglot'      " language pack
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'sjl/gundo.vim'             " Visual vim undo tree
+Plug 'fmoralesc/vim-pad'
+Plug 'mbbill/undotree'             " Visual vim undo tree
 Plug 'airblade/vim-gitgutter'    " Adds the symbols to the sidebar for git stuff
-Plug 'suan/vim-instant-markdown' " Preview .md in browser
+" Plug 'suan/vim-instant-markdown' " Preview .md in browser
 Plug 'troydm/zoomwintab.vim'     " Press ` to toggle zoom
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
+Plug 'reedes/vim-colors-pencil'
 call plug#end()
 " 2}}} "
 " Mappings {{{ "
@@ -130,7 +135,6 @@ nnoremap L $
 nnoremap ; :
 nnoremap : ;
 nnoremap Y y$
-" inoremap jj <ESC>
 inoremap jk <ESC>
 inoremap kj <ESC>
 nnoremap Q @q
@@ -157,6 +161,17 @@ vnoremap <C-h> <C-w>h
 vnoremap <C-j> <C-w>j
 vnoremap <C-k> <C-w>k
 vnoremap <C-l> <C-w>l
+if has('nvim')
+  tnoremap <C-j> <c-\><c-n><c-w>j
+  tnoremap <C-k> <c-\><c-n><c-w>k
+  tnoremap <C-h> <c-\><c-n><c-w>h
+  tnoremap <C-l> <c-\><c-n><c-w>l
+  au WinEnter *pid:* call feedkeys('i')
+
+  nnoremap <leader>t :term fish<CR>
+  tnoremap jk <c-\><c-n> 
+  tnoremap kj <c-\><c-n> 
+endif
 " Mappings}}} "
 " Plugins Settings/Mappings {{{ "
 " Airline {{{ "
@@ -194,19 +209,27 @@ let g:easy_align_ignore_groups = []
 " }}} Easy-Align "
 " Goyo {{{ "
 function! s:goyo_enter()
-  Limelight
   set linespace=5
-  setlocal nocursorline
+  set nocursorline
+  colorscheme pencil
+  Limelight
 endfunction
 function! s:goyo_leave()
-  Limelight!
   set linespace=2
-  setlocal cursorline
+  set cursorline
+  colorscheme iceberg
+  Limelight!
 endfunction
-autocmd User GoyoEnter Limelight
-autocmd User GoyoLeave Limelight!
+autocmd! User GoyoEnter
+autocmd! User GoyoLeave
+autocmd  User GoyoEnter nested call <SID>goyo_enter()
+autocmd  User GoyoLeave nested call <SID>goyo_leave()
 nnoremap <leader>g :Goyo<CR>
 " }}} Goyo "
+" Syntastic {{{ "
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
+" }}} Syntastic "
 " UltiSnips {{{ "
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -215,15 +238,18 @@ let g:UltiSnipsEditSplit="context"
 let g:UltiSnipsEnableSnipMate=0
 nnoremap <localleader>e :UltiSnipsEdit<CR>
 " }}} UltiSnips "
-" Syntastic {{{ "
-let g:syntastic_check_on_open=1
-let g:syntastic_enable_signs=1
-" }}} Syntastic "
-" Vim-Session {{{1 "
+" Vim-Session {{{2 "
 let g:session_autosave='yes'
-" Misc Plugins {{{1 "
-nnoremap <Leader>u :GundoToggle<CR>
-nnoremap <leader>e :ZoomWinTabToggle<CR>
+" Vim-Pad {{{2 "
+let g:pad#dir = "~/Documents/Notes/"
+let g:pad#local_dir = "notes"
+let g:pad#default_format = "pandoc"
+let g:pad#window_height = 8
+let g:pad#search_backend = "ag"
+
+" Misc Plugins {{{2 "
+nnoremap <Leader>u :UndotreeToggle<CR>
+nnoremap <localleader>\ :ZoomWinTabToggle<CR>
 let g:tex_flavor='latex'
 " }}} Misc Plugins "
 " }}} Plugins Settings/Mappings "
