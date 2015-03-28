@@ -99,10 +99,9 @@ Plug 'tpope/vim-vinegar'         " makes netrw a lot better
 " 1}}} "
 Plug 'SirVer/ultisnips'          " SNIPPETS
 Plug 'honza/vim-snippets'        " the snippets themselves
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'sgur/ctrlp-extensions.vim' " Adds ctrlp yank history and MRU
-Plug 'FelikZ/ctrlp-py-matcher'   " ctrlp.speed++
-Plug 'rking/ag.vim'
+Plug 'shougo/unite.vim'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'scrooloose/syntastic'         " error highlighting
 " Plug 'mattn/emmet-vim'              " for html/css
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
@@ -113,6 +112,7 @@ Plug 'junegunn/vim-easy-align'   " Press enter in visual mode...Magic
 Plug 'sheerun/vim-polyglot'      " language pack
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'fmoralesc/vim-pad'
 Plug 'mbbill/undotree'             " Visual vim undo tree
 Plug 'airblade/vim-gitgutter'    " Adds the symbols to the sidebar for git stuff
@@ -185,23 +185,29 @@ let g:airline#extensions#whitespace#enabled=0
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 " }}} Airline "
-" CTRL-P {{{ "
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_clear_cache_on_exit = 0
-nnoremap <leader>r :CtrlPMRU<CR>
-nnoremap <leader>y :CtrlPYankring<CR>
-inoremap <C-y> <ESC>:CtrlPYankring<CR>
-nnoremap <leader>f :CtrlPBuffer<CR>
-let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      \ --ignore .git
-      \ --ignore .svn
-      \ --ignore .hg
-      \ --ignore .DS_Store
-      \ --ignore "**/*.pyc"
-      \ -g ""'
-let g:ctrlp_yankring_limit = 20
-" }}} CTRL-P "
+" Unite {{{2 "
+if executable('ag')
+    let g:unite_source_grep_command='ag'
+    let g:unite_source_grep_default_opts='--nocolor --nogroup --hidden'
+    let g:unite_source_grep_recursive_opt=''
+endif
+function! s:unite_settings()
+    nmap <buffer> Q <plug>(unite_exit)
+    nmap <buffer> <esc> <plug>(unite_exit)
+    imap <buffer> <esc> <plug>(unite_exit)
+endfunction
+autocmd FileType unite call s:unite_settings()
+let g:unite_prompt='» '
+let g:unite_split_rule = 'botright'
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>e :<C-u>Unite -no-split -silent -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap <leader>r :<C-u>Unite -no-split -silent -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>o :<C-u>Unite -no-split -silent -buffer-name=outline -start-insert outline<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -silent -buffer-name=yank    history/yank<cr>
+nnoremap <leader>f :<C-u>Unite -no-split -silent -buffer-name=buffer  buffer<cr>
+nnoremap <Leader>/ :<C-u>Unite -no-split -silent -buffer-name=ag grep:.<CR>
+" }}} Unite "
 " Easy-Align {{{ "
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
