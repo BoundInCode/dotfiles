@@ -25,11 +25,11 @@ endif
 
 let g:colors_name = 'iceberg'
 
-
 hi! ColorColumn  cterm=NONE      ctermbg=235 guibg=#1e2132
 hi! CursorColumn cterm=NONE      ctermbg=235 guibg=#1e2132
 hi! CursorLine   cterm=NONE      ctermbg=235 guibg=#1e2132
 hi! Comment      ctermfg=242     guifg=#6b7089
+hi! clear Conceal
 hi! Constant     ctermfg=140     guifg=#a093c7
 hi! Cursor       ctermbg=252     ctermfg=234 guibg=#c6c8d1 guifg=#161821
 hi! CursorLineNr ctermbg=237     ctermfg=253 guibg=#2a3158 guifg=#cdd1e6
@@ -39,6 +39,7 @@ hi! DiffChange   ctermbg=66      ctermfg=234 guibg=#445861 guifg=#adc1cb
 hi! DiffDelete   ctermbg=95      ctermfg=234 guibg=#673e43 guifg=#d1a8ad
 hi! DiffText     cterm=NONE      ctermbg=116 ctermfg=234   gui=NONE      guibg=#89b8c2 guifg=#161821
 hi! Directory    ctermfg=109     guifg=#89b8c2
+hi! EndOfBuffer  ctermbg=black   ctermfg=NONE guibg=#161821 guifg=#161821
 hi! Error        ctermbg=234     ctermfg=203 guibg=#161821 guifg=#e27878
 hi! ErrorMsg     ctermbg=234     ctermfg=203 guibg=#161821 guifg=#e27878
 hi! WarningMsg   ctermbg=234     ctermfg=203 guibg=#161821 guifg=#e27878
@@ -110,4 +111,3 @@ hi! link xmlEndTag Statement
 hi! link xmlNamespace Statement
 hi! link xmlTag Statement
 hi! link xmlTagName Statement
-hi! link yamlKeyValueDelimiter Delimiter

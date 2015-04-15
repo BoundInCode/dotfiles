@@ -16,6 +16,7 @@ filetype indent off
 set nohlsearch
 set incsearch
 set modelines=0
+set expandtab
 set tabstop=4
 set history=1000
 set wrap
@@ -47,6 +48,7 @@ set smarttab
 set formatoptions+=j
 set formatoptions-=cro
 set foldmethod=marker
+set foldcolumn=0
 set wildignore+=*/tmp/*,*.so,*.pyc,*pdf,*docx,*.swp,*.zip,*.indd,*.psd,*mp3,*.png,*jpg
 set wildignore+=$HOME./Library/*
 let g:netrw_list_hide =  '\.png$,\.jpg$,\.png$'
@@ -60,7 +62,7 @@ set splitright
 set spelllang=en_us
 set spellfile=$HOME/.vim/spell/en.utf-8.add
 autocmd BufRead,BufNewFile *.md setlocal spell
-au BufRead,BufNewFile *.md set filetype=markdown
+au BufRead,BufNewFile *.md set filetype=pandoc
 au BufEnter * silent! lcd %:p:h
 " }}} Extras "
 " Appearance {{{ "
@@ -69,7 +71,6 @@ set guifont=Fira\ Mono:h14
 set linespace=2
 colorscheme iceberg
 " colorscheme gotham
-
 " }}} Appearance "
 " Backups {{{1 "
 set undofile
@@ -99,28 +100,31 @@ Plug 'tpope/vim-vinegar'         " makes netrw a lot better
 " 1}}} "
 Plug 'SirVer/ultisnips'          " SNIPPETS
 Plug 'honza/vim-snippets'        " the snippets themselves
+Plug 'osyo-manga/vim-over'       " Visual find/replace %s
 Plug 'shougo/unite.vim'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'scrooloose/syntastic'         " error highlighting
-" Plug 'mattn/emmet-vim'              " for html/css
+Plug 'scrooloose/syntastic'      " error highlighting
+" Plug 'mattn/emmet-vim'         " for html/css
+Plug 'ajh17/VimCompletesMe'
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
 Plug 'bling/vim-airline'         " those pretty bars at top and bottom
 Plug 'junegunn/goyo.vim'         " For distraction-free writing
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vim-easy-align'   " Press enter in visual mode...Magic
-Plug 'sheerun/vim-polyglot'      " language pack
+"Plug 'sheerun/vim-polyglot'      " language pack
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'fmoralesc/vim-pad'
-Plug 'mbbill/undotree'             " Visual vim undo tree
+Plug 'simnalamburt/vim-mundo'
 Plug 'airblade/vim-gitgutter'    " Adds the symbols to the sidebar for git stuff
 " Plug 'suan/vim-instant-markdown' " Preview .md in browser
 Plug 'troydm/zoomwintab.vim'     " Press ` to toggle zoom
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
 Plug 'reedes/vim-colors-pencil'
+Plug 'chrisbra/Colorizer'
 call plug#end()
 " 2}}} "
 " Mappings {{{ "
@@ -149,6 +153,9 @@ nnoremap N Nzzzv
 " smarter 'Comment', 'String' paste
 imap <D-V> ^O"+p
 
+nnoremap <silent> <Space><space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <space><space> zf<F37>
+
 " for when you forget to sudo
 cmap w!! w !sudo tee >/dev/null %
 
@@ -175,7 +182,7 @@ endif
 " Mappings}}} "
 " Plugins Settings/Mappings {{{ "
 " Airline {{{ "
-let g:airline_theme='luna'
+let g:airline_theme='pencil'
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
@@ -198,9 +205,11 @@ function! s:unite_settings()
 endfunction
 autocmd FileType unite call s:unite_settings()
 let g:unite_prompt='» '
-let g:unite_split_rule = 'botright'
 let g:unite_source_history_yank_enable = 1
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#custom#profile('default', 'context', {
+      \ 'direction': 'top'
+      \ })
 nnoremap <leader>e :<C-u>Unite -no-split -silent -buffer-name=files   -start-insert file_rec/async:!<cr>
 nnoremap <leader>r :<C-u>Unite -no-split -silent -buffer-name=mru     -start-insert file_mru<cr>
 nnoremap <leader>o :<C-u>Unite -no-split -silent -buffer-name=outline -start-insert outline<cr>
@@ -254,8 +263,10 @@ let g:pad#window_height = 8
 let g:pad#search_backend = "ag"
 
 " Misc Plugins {{{2 "
-nnoremap <Leader>u :UndotreeToggle<CR>
-nnoremap <localleader>\ :ZoomWinTabToggle<CR>
+nnoremap <Leader>u :GundoToggle<CR>
+nnoremap ``> :ZoomWinTabToggle<CR>
 let g:tex_flavor='latex'
+let g:pencil_terminal_italics = 1
+let g:pandoc#folding#fdc = 0
 " }}} Misc Plugins "
 " }}} Plugins Settings/Mappings "
