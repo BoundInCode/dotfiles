@@ -4,9 +4,9 @@
 " Maintainer: popkirby <popkirby@gmail.com>
 " License:    MIT
 
-let s:mono0   = '#1e2132'
-let s:mono1   = '#2a3158'
-let s:mono2   = '#3d425b'
+let s:mono0   = '#003D4B'
+let s:mono1   = '#003D4B'
+let s:mono2   = '#003D4B'
 let s:mono3   = '#444b71'
 let s:mono4   = '#818596'
 let s:mono5   = '#c6c8d1'
