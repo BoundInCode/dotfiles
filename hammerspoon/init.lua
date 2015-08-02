@@ -91,22 +91,3 @@ function reload_config(files)--{{{
 	end
 	hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", reload_config):start()
 	hs.alert.show("Config loaded")--}}}
-
------------------------------------------------
--- Hyper hjkl to switch window focus
------------------------------------------------
-hs.hotkey.bind(hyper, 'k', function()
-    hs.window.focusedWindow():focusWindowNorth()
-end)
-
-hs.hotkey.bind(hyper, 'j', function()
-    hs.window.focusedWindow():focusWindowSouth()
-end)
-
-hs.hotkey.bind(hyper, 'l', function()
-    hs.window.focusedWindow():focusWindowEast()
-end)
-
-hs.hotkey.bind(hyper, 'h', function()
-    hs.window.focusedWindow():focusWindowWest()
-end)

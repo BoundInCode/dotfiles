@@ -17,3 +17,5 @@ set fish_plugins theme
 
 set -Ux NVIM_TUI_ENABLE_CURSOR_SHAPE 1
 set -Ux NVIM_TUI_ENABLE_TRUE_COLOR 1
+
+source /Users/liam/.iterm2_shell_integration.fish

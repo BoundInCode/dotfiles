@@ -1,8 +1,8 @@
-" Liam Cain
-" .vimrc
+" Author: Liam Cain
+" Last Updated: 8-2-2015
+" .nvimrc
 
 syntax on
-set nocompatible
 
 "Required for fish and vim to play together
 if $SHELL =~ 'bin/fish'
@@ -24,8 +24,6 @@ set wrap
 set linebreak
 set shiftwidth=4
 set encoding=utf-8
-set scrolloff=3
-set cpoptions+=cpo-$
 set autoindent
 set noshowmode
 set showcmd
@@ -66,28 +64,33 @@ set spellfile=$HOME/.vim/spell/en.utf-8.add
 autocmd BufRead,BufNewFile *.md setlocal spell
 au BufRead,BufNewFile *.md set filetype=pandoc
 au BufEnter * silent! lcd %:p:h
+if has('nvim')
+    let g:terminal_color_0  = '#2e3436'
+    let g:terminal_color_1  = '#F74150'
+    let g:terminal_color_2  = '#4e9a06'
+    let g:terminal_color_3  = '#c4a000'
+    let g:terminal_color_4  = '#268BD2'
+    let g:terminal_color_5  = '#6C71C4'
+    let g:terminal_color_6  = '#0b939b'
+    let g:terminal_color_7  = '#d3d7cf'
+    let g:terminal_color_8  = '#555753'
+    let g:terminal_color_9  = '#F74150'
+    let g:terminal_color_10 = '#8ae234'
+    let g:terminal_color_11 = '#fce94f'
+    let g:terminal_color_12 = '#268BD2'
+    let g:terminal_color_13 = '#6C71C4'
+    let g:terminal_color_14 = '#00f5e9'
+    let g:terminal_color_15 = '#eeeeec'
+else
+    set cpoptions+=cpo-$
+endif
 " }}} Extras "
 " Terminal {{{1 "
-let g:terminal_color_0  = '#2e3436'
-let g:terminal_color_1  = '#cc0000'
-let g:terminal_color_2  = '#4e9a06'
-let g:terminal_color_3  = '#c4a000'
-let g:terminal_color_4  = '#268BD2'
-let g:terminal_color_5  = '#75507b'
-let g:terminal_color_6  = '#0b939b'
-let g:terminal_color_7  = '#d3d7cf'
-let g:terminal_color_8  = '#555753'
-let g:terminal_color_9  = '#ef2929'
-let g:terminal_color_10 = '#8ae234'
-let g:terminal_color_11 = '#fce94f'
-let g:terminal_color_12 = '#268BD2'
-let g:terminal_color_13 = '#ad7fa8'
-let g:terminal_color_14 = '#00f5e9'
-let g:terminal_color_15 = '#eeeeec'
 " }}} "
 " Appearance {{{ "
 set guioptions-=r
 set guifont=Fira\ Mono:h14
+set display+=lastline
 set linespace=2
 colorscheme iceberg
 " colorscheme gotham
@@ -95,7 +98,7 @@ colorscheme iceberg
 " Backups {{{1 "
 set undofile
 set backup                        " enable backups
-set noswapfile                    " it's 2013, Vim.
+set noswapfile
 
 set undodir=~/.vim/tmp/undo//     " undo files
 set backupdir=~/.vim/tmp/backup// " backups
@@ -121,13 +124,8 @@ Plug 'tpope/vim-vinegar'         " makes netrw a lot better
 Plug 'SirVer/ultisnips'          " SNIPPETS
 Plug 'honza/vim-snippets'        " the snippets themselves
 Plug 'osyo-manga/vim-over'       " Visual find/replace %s
-Plug 'shougo/unite.vim'
-Plug 'Shougo/neomru.vim'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'scrooloose/syntastic'      " error highlighting
-" Plug 'mattn/emmet-vim'         " for html/css
-Plug 'ajh17/VimCompletesMe'
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.sh' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'benekastah/neomake'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/goyo.vim'         " For distraction-free writing
 Plug 'junegunn/limelight.vim'
@@ -139,12 +137,9 @@ Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'vim-pandoc/vim-pandoc-after'
 Plug 'simnalamburt/vim-mundo'
 Plug 'airblade/vim-gitgutter'    " Adds the symbols to the sidebar for git stuff
-" Plug 'suan/vim-instant-markdown' " Preview .md in browser
 Plug 'troydm/zoomwintab.vim'     " Press ` to toggle zoom
 Plug 'xolox/vim-session'
 Plug 'xolox/vim-misc'
-Plug 'KabbAmine/vCoolor.vim'
-Plug 'chrisbra/Colorizer'
 Plug 'reedes/vim-colors-pencil'
 call plug#end()
 " 2}}} "
@@ -163,6 +158,9 @@ nnoremap Y y$
 inoremap jk <ESC>
 inoremap kj <ESC>
 nnoremap Q @q
+
+" Fix visual mode paste.
+xnoremap p "_dP
 
 " Uses 'very magic' regex search
 nnoremap / /\v
@@ -204,29 +202,44 @@ endif
 " Mappings}}} "
 " Plugins Settings/Mappings {{{ "
 " Unite {{{2 "
-if executable('ag')
-    let g:unite_source_grep_command='ag'
-    let g:unite_source_grep_default_opts='--nocolor --nogroup --hidden'
-    let g:unite_source_grep_recursive_opt=''
-endif
-function! s:unite_settings()
-    nmap <buffer> Q <plug>(unite_exit)
-    nmap <buffer> <esc> <plug>(unite_exit)
-    imap <buffer> <esc> <plug>(unite_exit)
-endfunction
-autocmd FileType unite call s:unite_settings()
-let g:unite_prompt='» '
-let g:unite_source_history_yank_enable = 1
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
 
-call unite#custom#profile('default', 'context', {
-      \ 'direction': 'top'
-      \ })
+command! FZFMru call fzf#run({
+            \'source': v:oldfiles,
+            \'sink' : 'e ',
+            \'options' : '-m --reverse',
+            \})
+command! FZFFiles call fzf#run({
+        \'sink' : 'e ',
+        \'options' : '-m --reverse',
+        \})
+nnoremap <silent> <leader>a :FZFFiles<CR>
+nnoremap <silent> <leader>r :FZFMru<CR>
+function! s:buflist()
+  redir => ls
+  silent ls
+  redir END
+  return split(ls, '\n')
+endfunction
+
+function! s:bufopen(e)
+  execute 'buffer' matchstr(a:e, '^[ 0-9]*')
+endfunction
+
+nnoremap <silent> <Leader>f :call fzf#run({
+\   'source':  reverse(<sid>buflist()),
+\   'sink':    function('<sid>bufopen'),
+\   'options': '+m --reverse',
+\   'down':    len(<sid>buflist()) + 2
+\ })<CR>
+
+let g:neomake_verbose = 0
+augroup Neomake
+    au!
+    au! BufWritePost * Neomake
+augroup END
 nnoremap <leader>e :<C-u>Unite -no-split -silent -buffer-name=files   -start-insert file_rec/async:!<cr>
-nnoremap <leader>r :<C-u>Unite -no-split -silent -buffer-name=mru     -start-insert file_mru<cr>
 nnoremap <leader>y :<C-u>Unite -no-split -silent -buffer-name=yank    history/yank<cr>
-nnoremap <leader>f :<C-u>Unite -no-split -silent -buffer-name=buffer  buffer<cr>
+" nnoremap <leader>f :<C-u>Unite -no-split -silent -buffer-name=buffer  buffer<cr>
 nnoremap <Leader>/ :<C-u>Unite -no-split -silent -buffer-name=ag grep:.<CR>
 " }}} Unite "
 " Lightline {{{2 "

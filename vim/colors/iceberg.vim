@@ -39,10 +39,10 @@ hi! DiffChange   ctermbg=66      ctermfg=234 guibg=#445861 guifg=#adc1cb
 hi! DiffDelete   ctermbg=95      ctermfg=234 guibg=#673e43 guifg=#d1a8ad
 hi! DiffText     cterm=NONE      ctermbg=116 ctermfg=234   gui=NONE      guibg=#89b8c2 guifg=#161821
 hi! Directory    ctermfg=109     guifg=#89b8c2
-hi! EndOfBuffer  ctermbg=black   ctermfg=NONE guibg=#003D4B guifg=#003D4B
-hi! Error        ctermbg=234     ctermfg=203 guibg=#161821 guifg=#e27878
-hi! ErrorMsg     ctermbg=234     ctermfg=203 guibg=#161821 guifg=#e27878
-hi! WarningMsg   ctermbg=234     ctermfg=203 guibg=#161821 guifg=#e27878
+hi! EndOfBuffer  ctermbg=234   ctermfg=NONE guibg=#003D4B guifg=#003D4B
+hi! Error        ctermbg=234     ctermfg=203 guibg=#003C4B guifg=#e27878
+hi! ErrorMsg     ctermbg=234     ctermfg=203 guibg=#003C4B guifg=#e27878
+hi! WarningMsg   ctermbg=234     ctermfg=203 guibg=#003C4B guifg=#e27878
 hi! Folded       ctermbg=235     ctermfg=245 guibg=#003D4B guifg=#686f9a
 hi! FoldColumn   ctermbg=235     ctermfg=239 guibg=#003D4B guifg=#444b71
 hi! Function     ctermfg=216     guifg=#e2a478
@@ -73,9 +73,9 @@ hi! StatusLineNC cterm=reverse   ctermbg=238 ctermfg=233   gui=reverse   guibg=#
 hi! StorageClass ctermfg=110     guifg=#84a0c6
 hi! String       ctermfg=109     guifg=#89b8c2
 hi! Structure    ctermfg=109     guifg=#89b8c2
-hi! TabLine      cterm=NONE      ctermbg=245 ctermfg=234   gui=NONE      guibg=#818596 guifg=#17171b
-hi! TabLineFill  cterm=reverse   ctermbg=234 ctermfg=245   gui=reverse   guibg=#17171b guifg=#818596
-hi! TabLineSel   cterm=NONE      ctermbg=234 ctermfg=252   gui=NONE      guibg=#161821 guifg=#9a9ca5
+hi! TabLine      cterm=NONE      ctermbg=245 ctermfg=234   gui=NONE      guibg=#003C4B guifg=#17171b
+hi! TabLineFill  cterm=reverse   ctermbg=234 ctermfg=245   gui=reverse   guibg=#003C4B guifg=#818596
+hi! TabLineSel   cterm=NONE      ctermbg=234 ctermfg=252   gui=NONE      guibg=#003C4 guifg=#9a9ca5
 hi! Title        ctermfg=216     gui=NONE    guifg=#e2a478
 hi! Todo         ctermbg=234     ctermfg=150 guibg=#161821 guifg=#d8e599
 hi! Type         ctermfg=109     gui=NONE    guifg=#89b8c2
