@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/liam/.nvim/colors'
+let g:netrw_dirhist_2='/Users/liam/.nvim'
+let g:netrw_dirhist_3='/Users/liam'
+let g:netrw_dirhist_4='/Users/liam/.nvim'
+let g:netrw_dirhist_5='/Users/liam/.vim'
+let g:netrw_dirhist_6='/Users/liam/.vim/colors'
+let g:netrw_dirhist_7='/Users/liam/dotfiles/vim/colors'
