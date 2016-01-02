@@ -7,9 +7,9 @@
 let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
 let s:p.normal.left =  [ ['white', '#00637B', 'bold'], ['#00BEEF', '#005165'] ]
 let s:p.normal.right = [ ['white', '#00637B'], ['white', '#00637B'], ['#00BEEF', '#005165'] ]
-let s:p.inactive.right = [ ['gray4', 'gray1'], ['gray4', 'gray1'], ['gray4', 'gray0'] ]
+let s:p.inactive.right = [ ['gray4', '#0F1117'], ['gray4', '#0F1117'], ['gray4', '#0F1117'] ]
 let s:p.inactive.left = s:p.inactive.right[1:]
-let s:p.inactive.middle = [ ['gray1', 'gray1'] ]
+let s:p.inactive.middle = [ ['#0F1117', '#0F1117'] ]
 let s:p.insert.left = [ ['darkestcyan', 'white', 'bold'], ['white', 'darkblue'] ]
 let s:p.insert.right = [ [ 'darkestcyan', 'mediumcyan' ], [ 'mediumcyan', 'darkblue' ], [ 'mediumcyan', 'darkestblue' ] ]
 let s:p.replace.left = [ ['white', 'brightred', 'bold'], ['white', 'gray4'] ]

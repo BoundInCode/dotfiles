@@ -15,7 +15,7 @@ set fish_plugins theme
 # Load oh-my-fish configuration.
 . $fish_path/oh-my-fish.fish
 
-set -Ux NVIM_TUI_ENABLE_CURSOR_SHAPE 1
-set -Ux NVIM_TUI_ENABLE_TRUE_COLOR 1
+set -x TMPDIR /tmp
 
 source /Users/liam/.iterm2_shell_integration.fish
+
